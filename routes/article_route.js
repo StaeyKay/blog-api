@@ -1,16 +1,31 @@
 import { Router } from "express";
-import { addArticle, deleteArticle, getArticles, updateArticle } from "../controllers/article_controller.js";
+import {
+  addArticle,
+  deleteArticle,
+  getArticles,
+  updateArticle,
+} from "../controllers/article_controller.js";
 import { remoteUpload } from "../middlewares/upload.js";
 import { checkAuth } from "../middlewares/auth.js";
 
 const articleRouter = Router();
 
-articleRouter.post('/users/articles', remoteUpload.single("image"), checkAuth, addArticle)
+articleRouter.post(
+  "/users/articles",
+  checkAuth,
+  remoteUpload.single("image"),
+  addArticle
+);
 
-articleRouter.get('/users/articles', checkAuth, getArticles)
+articleRouter.get("/users/articles", checkAuth, getArticles);
 
-articleRouter.patch('/users/articles/:id', remoteUpload.single("image"), checkAuth, updateArticle)
+articleRouter.patch(
+  "/users/articles/:id",
+  remoteUpload.single("image"),
+  checkAuth,
+  updateArticle
+);
 
-articleRouter.delete('/users/articles/:id', checkAuth, deleteArticle)
+articleRouter.delete("/users/articles/:id", checkAuth, deleteArticle);
 
-export default articleRouter
+export default articleRouter;
