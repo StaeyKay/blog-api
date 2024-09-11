@@ -25,6 +25,16 @@ export const updateUserValidator = Joi.object({
   role: Joi.string().valid("admin", "manager"),
 });
 
+export const forgotPasswordValidator = Joi.object({
+  email: Joi.string().email().required(),
+});
+
+export const resetPasswordValidator = Joi.object({
+  resetToken: Joi.string().required(),
+  password: Joi.string().required(),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
+});
+
 export const articleValidator = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),

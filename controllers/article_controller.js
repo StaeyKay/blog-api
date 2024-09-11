@@ -41,10 +41,18 @@ export const addArticle = async (req, res) => {
 // Endpoint to get all articles
 export const getArticles = async (req, res) => {
   try {
-    // Check if user is logged in
-    const userId = req?.user?.id;
+    // Get query parameters
+    const { filter, fields, limit, skip } = req.query;
 
-    const articles = await ArticleModel.find({ user: userId });
+    // Safely parse filter and fields only if they are provided
+    const filterQuery = filter ? JSON.parse(filter) : {}; // Default to an empty object if no filter is provided
+    const selectFields = fields ? JSON.parse(fields) : {}; // Default to an empty object if no fields are provided
+
+    // Get all articles from the database
+    const articles = await ArticleModel.find(filterQuery)
+      .select(selectFields)
+      .limit(limit)
+      .skip(skip);
 
     res.status(200).json(articles);
   } catch (error) {
