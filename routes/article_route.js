@@ -17,7 +17,7 @@ articleRouter.post(
   addArticle
 );
 
-articleRouter.get("/users/articles", getArticles);
+articleRouter.get("/users/articles", checkAuth, getArticles);
 
 articleRouter.patch(
   "/users/articles/:id",
