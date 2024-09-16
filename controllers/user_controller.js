@@ -108,7 +108,7 @@ export const getLoggedInUser = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json(erroe.message);
+    res.status(500).json(error.message);
   }
 };
 
