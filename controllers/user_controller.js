@@ -69,7 +69,7 @@ export const login = async (req, res) => {
       user: {
         username: user.username,
         role: user.role,
-        id: user.id
+        id: user.id,
       },
     });
   } catch (error) {
@@ -89,6 +89,26 @@ export const profile = async (req, res, next) => {
     res.status(200).json(user);
   } catch (error) {
     next(error);
+  }
+};
+
+// Get logged in user
+export const getLoggedInUser = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({ error: "User not logged in", user: null });
+    }
+    return res.status(200).json({
+      error: null,
+      user: {
+        username: user.username,
+        role: user.role,
+        id: user.id,
+      },
+    });
+  } catch (error) {
+    res.status(500).json(erroe.message);
   }
 };
 
